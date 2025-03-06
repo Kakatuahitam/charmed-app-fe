@@ -18,7 +18,23 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
         <Link href="/">Welcome</Link>
         <Link href="/todo">Todo</Link>
         <Link href="/star-wars">Data Fetching</Link>
-        {""}
+
+        <div>Members</div>
+        <SubMenu>
+          <Link href="/members">Manage</Link>
+        </SubMenu>
+
+        <Link href="/meetings">Meetings</Link>
+        <SubMenu>
+          <Link href="/meetings/manage">Manage</Link>
+        </SubMenu>
+
+        <div>Achievements</div>
+        <SubMenu>
+          <Link href="/sku">SKU</Link>
+          <Link href="/skk">SKK</Link>
+          <Link href="/spg">SPG</Link>
+        </SubMenu>
       </Sidebar>
       <Content>{children}</Content>
     </div>
@@ -31,6 +47,24 @@ function Sidebar({ children }: { children: React.ReactNode }) {
       id="sidebar"
       style={{
         padding: 20,
+        flexShrink: 0,
+        display: "flex",
+        flexDirection: "column",
+        lineHeight: "1.8em",
+        borderRight: "2px solid #eee",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function SubMenu({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div
+      id="sidebar"
+      style={{
+        paddingLeft: 20,
         flexShrink: 0,
         display: "flex",
         flexDirection: "column",

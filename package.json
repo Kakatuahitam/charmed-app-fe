@@ -5,10 +5,14 @@
     "preview": "vike preview"
   },
   "dependencies": {
-    "vike": "^0.4.223",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.7",
+    "@mui/material": "^6.4.7",
     "@vitejs/plugin-react": "^4.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "vike": "^0.4.223",
     "vike-react": "^0.5.13"
   },
   "devDependencies": {
@@ -16,6 +20,10 @@
     "vite": "^6.1.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "type": "module"
 }
