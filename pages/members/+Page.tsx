@@ -7,7 +7,7 @@ export default function Page() {
   const data = useData<Data>();
   return (
     <>
-      <h1>Members</h1>
+      <h1>Members Dashboard</h1>
       <TodoList initialTodoItems={data.todo} />
     </>
   );

@@ -19,9 +19,9 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
         <Link href="/todo">Todo</Link>
         <Link href="/star-wars">Data Fetching</Link>
 
-        <div>Members</div>
+        <Link href="/members">Members</Link>
         <SubMenu>
-          <Link href="/members">Manage</Link>
+          <Link href="/members/manage">Manage</Link>
         </SubMenu>
 
         <Link href="/meetings">Meetings</Link>
@@ -29,11 +29,11 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
           <Link href="/meetings/manage">Manage</Link>
         </SubMenu>
 
-        <div>Achievements</div>
+        <Link href="/achievements">Achievements</Link>
         <SubMenu>
-          <Link href="/sku">SKU</Link>
-          <Link href="/skk">SKK</Link>
-          <Link href="/spg">SPG</Link>
+          <Link href="/achievements/sku">SKU</Link>
+          <Link href="/achievements/skk">SKK</Link>
+          <Link href="/achievements/spg">SPG</Link>
         </SubMenu>
       </Sidebar>
       <Content>{children}</Content>
