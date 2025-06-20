@@ -6,16 +6,22 @@ export type Data = Awaited<ReturnType<typeof data>>;
 export const data = async () => {
   const config = useConfig();
 
-  const response = await fetch("http://localhost:3000/users");
-  const json = await response.json()
+  var response = await fetch("http://localhost:3000/users");
+  var json = await response.json()
 
   const usersData = (json.data) as Users[];
+
+  var response = await fetch("http://localhost:3000/groups");
+  var json = await response.json()
+
+  const groupsData = (json.data) as Groups[];
 
   config({
     title: `${usersData.length} Members of Charmed Scout`,
   });
 
   const users = usersData;
+  const groups = groupsData;
 
-  return users;
+  return { users, groups };
 }

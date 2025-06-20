@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from 'vike-react/useData';
 import {
-  Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemText
+  Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, List, ListItem, ListItemText, MenuItem, Select
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -10,32 +10,38 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import type { Data } from './+data.js'
 
 export default function Page() {
-  const users = useData<Data>();
+  const groups = useData<Data>();
 
   // Datagrid stuffs
   const [selection, setSelection] = useState<GridSelectionModel>([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
   const columns: GridColDef<(typeof rows)[number]>[] = [
-    { field: 'id', headerName: 'ID', width: 200 },
+    { field: 'id', headerName: 'ID', },
     {
-      field: 'firstName',
-      headerName: 'First name',
-      width: 250,
+      field: 'name',
+      headerName: 'Nama Kelompok',
+      width: 160,
       editable: false,
     },
     {
-      field: 'lastName',
-      headerName: 'Last name',
-      width: 250,
+      field: 'type',
+      headerName: 'Jenis Kelompok',
+      width: 120,
+      editable: false,
+    },
+    {
+      field: 'memberCount',
+      headerName: 'Jumlah Anggota',
+      width: 80,
       editable: false,
     },
   ];
 
-  const rows = users;
+  const rows = groups;
 
   // Set up data to send
-  const [formData, setFormData] = useState({ firstName: '', lastName: '' });
+  const [formData, setFormData] = useState({ name: '', type: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,21 +58,21 @@ export default function Page() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName
+          name: formData.name,
+          type: formData.type
         })
       };
 
-      const response = await fetch("http://localhost:3000/users", options);
+      const response = await fetch("http://localhost:3000/groups", options);
 
       if (!response.ok) {
-        throw new Error(`Failed to add user: ${response.statusText}`);
+        throw new Error(`Failed to add group: ${response.statusText}`);
       }
 
       window.location.reload();
     } catch (error) {
-      console.error('Error adding user:', error);
-      alert('An error occurred while adding the user. Please try again.');
+      console.error('Error adding group:', error);
+      alert('An error occurred while adding the group. Please try again.');
     }
   };
 
@@ -98,42 +104,34 @@ export default function Page() {
         })
       };
 
-      const response = await fetch("http://localhost:3000/users", options);
+      const response = await fetch("http://localhost:3000/groups", options);
 
       if (!response.ok) {
-        throw new Error(`Failed to delete user: ${response.statusText}`);
+        throw new Error(`Failed to delete group: ${response.statusText}`);
       }
 
       window.location.reload();
     } catch (error) {
-      console.error('Error deleting user(s):', error);
-      alert('An error occurred while deleting the user. Please try again.');
+      console.error('Error deleting group(s):', error);
+      alert('An error occurred while deleting the group. Please try again.');
     }
   }
 
   return (
     <>
-      <h1>Members - Add Member</h1>
+      <h1>Groups - View Groups</h1>
       <hr></hr>
-      <Box
-        component="form"
-        sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
-        onSubmit={handleSubmit}
-      >
-        <TextField id="firstName" name="firstName" label="First Name" variant="filled"
-          value={formData.firstName}
-          onChange={handleChange}
-        />
-        <TextField id="lastName" name="lastName" label="Last Name" variant="filled"
-          value={formData.lastName}
-          onChange={handleChange}
-        />
-        <Button type="submit">Add Member</Button>
-      </Box>
 
-      <h1>Members - Manage</h1>
-      <hr></hr>
-      These are our Charmed Scout Member
+      <h3>Actions</h3>
+      <p>No current action available this time</p>
+      {/* <Button type="submit"
+        disabled={selectedRows >= 0}
+        onClick={handleOpenDialog}
+        variant="contained"
+      >
+        Delete
+      </Button>
+      {selectedRows.length} records */}
 
       <Box sx={{ width: '100%' }}>
         <DataGrid
@@ -155,24 +153,16 @@ export default function Page() {
         />
       </Box>
 
-      <Button type="submit"
-        disabled={selectedRows >= 0}
-        onClick={handleOpenDialog}
-      >
-        Delete
-      </Button>
-      {selectedRows.length} records
-
       <Dialog open={openDialog} onClose={handleCloseDialog}>
        <DialogTitle>Confirm Deletion</DialogTitle>
        <DialogContent>
          <p>Are you sure you want to delete this/these <strong>{selectedRows.length}</strong> member(s)?</p>
          <List>
           {selectedRows.map((id, index) => {
-            const user = users.find((u) => u._id === id || u.id === id);
+            const group = groups.find((u) => u._id === id || u.id === id);
             return (
               <ListItem key={id}>
-                <ListItemText primary={user ? `${index + 1}. ${user.firstName} ${user.lastName}` : "Unknown"} secondary={`ID: ${id}`} />
+                <ListItemText primary={group ? `${index + 1}. ${group.name} ${group.type}` : "Unknown"} secondary={`ID: ${id}`} />
               </ListItem>
             );
           })}

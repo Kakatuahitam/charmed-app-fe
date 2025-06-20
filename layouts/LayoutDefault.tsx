@@ -21,7 +21,8 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
 
         <Link href="/members">Members</Link>
         <SubMenu>
-          <Link href="/members/manage">Manage</Link>
+          <Link href="/members/administration">Administrations</Link>
+          <Link href="/members/groups">Groups</Link>
         </SubMenu>
 
         <Link href="/meetings">Meetings</Link>
